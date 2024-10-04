@@ -48,24 +48,32 @@ function HomeCom() {
   const [products, setProducts] = useState([]);
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
+
+  const [filteredProducts, setFilteredProducts] = useState([]); // Отфильтрованные продукты
+  const [minPrice, setMinPrice] = useState(0); // Начальное значение для minPrice
+  const [maxPrice, setMaxPrice] = useState(100000); 
+
   const dispatch = useDispatch();
   const [checkedItems, setCheckedItems] = useState({}); // Состояние для отслеживания выбранных товаров
 
   const navigate = useNavigate(); // Инициализация useHistory
 
-  // ... остальной код ...
-  const [minPrice, setMinPrice] = useState(0); // Начальное значение для minPrice
-  const [maxPrice, setMaxPrice] = useState(100); // Начальное значение для maxPrice
+  const handleMinChange = (event) => {
+    setMinPrice(event.target.value);
+  };
+
+  const handleMaxChange = (event) => {
+    setMaxPrice(event.target.value);
+  };
+
+  // Функция для фильтрации продуктов по цене
+  const handleFilterClick = () => {
+    const filtered = products.filter(item => item.price >= minPrice && item.price <= maxPrice);
+    setFilteredProducts(filtered); // Обновляем список отфильтрованных продуктов
+  };
 
   // Функция для изменения значения minPrice
-  const handleMinChange = (event) => {
-      setMinPrice(event.target.value); // Обновляет состояние minPrice
-  };
-
-  // Функция для изменения значения maxPrice
-  const handleMaxChange = (event) => {
-      setMaxPrice(event.target.value); // Обновляет состояние maxPrice
-  };
+  
 
  
 
@@ -135,14 +143,7 @@ function HomeCom() {
     navigate('/checkout', { state: { quantity: selectedQuantity } });
   };
   
-  const handleCheckboxChange = (item) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item.id]: !prev[item.id], // Инвертируем текущее состояние
-    }));
-  };
   
-
 
 
   return (
@@ -458,89 +459,79 @@ function HomeCom() {
         <h1>Гарантия лучшей <br /> цены</h1>
       </div>
 
- <div className='main1-podbor1'>
-  <div className='podbor1-top'>
-    <h1>Подберем пару по бюджету</h1>
-  
- 
-      <div className="price-range">
-      <label>Цена</label>
-      <div className="slider-container">
-        <input
-          type="range"
-          id="rangeMin"
-          min="0"
-          max="100000"
-          value={minPrice}
-          step="100"
-          onChange={handleMinChange}
-        />
-        <input
-          type="range"
-          id="rangeMax"
-          min="0"
-          max="100000"
-          value={maxPrice}
-          step="100"
-          onChange={handleMaxChange}
-        />
-      </div>
-      <div className="price-labels">
-        <input
-          type="text"
-          id="minPrice"
-          value={parseInt(minPrice).toLocaleString()}
-          readOnly
-        />
-        <span>–</span>
-        <input
-          type="text"
-          id="maxPrice"
-          value={parseInt(maxPrice).toLocaleString()}
-          readOnly
-        />
-        <span>₽</span>
-      </div>
-    <button>Подобрать</button>
-    </div>
-    </div>
+      <div className="main1-podbor1">
+        <div className="price-range">
+          <label>Цена</label>
+          <div className="slider-container">
+            <input
+              type="range"
+              id="rangeMin"
+              min="0"
+              max="100000"
+              value={minPrice}
+              step="100"
+              onChange={handleMinChange}
+            />
+            <input
+              type="range"
+              id="rangeMax"
+              min="0"
+              max="100000"
+              value={maxPrice}
+              step="100"
+              onChange={handleMaxChange}
+            />
+          </div>
+          <div className="price-labels">
+            <input
+              type="text"
+              id="minPrice"
+              value={parseInt(minPrice).toLocaleString()}
+              readOnly
+            />
+            <span>–</span>
+            <input
+              type="text"
+              id="maxPrice"
+              value={parseInt(maxPrice).toLocaleString()}
+              readOnly
+            />
+            <span>₽</span>
+          </div>
+          <button onClick={handleFilterClick}>Подобрать</button>
+        </div>
 
-
-    <div className='main1-kros'>
-    {
-            products.slice(0, 24).map((item) => (
+        <div className="main1-kros">
+          {
+            filteredProducts.slice(0, 24).map((item) => (
               <div key={item.id} data={item}>
-           <div className='kros1'>
-                  <div className='mm'>
-                  <img 
-                      src={item.avatar} 
-                      alt="" 
-                      // style={{ height: "248px", marginTop: "-60px" }} 
-                      onClick={() => handleAvatarClick(item)} // Обработчик клика
-                    /> 
+                <div className="kros1">
+                  <div className="mm">
+                    <img
+                      src={item.avatar}
+                      alt={item.name}
+                      onClick={() => handleAvatarClick(item)}
+                    />
                   </div>
-                  
-                    <button style={{width: "250px", backgroundColor: "yellow", border:"none",}} onClick={() => toggleButton(item)}>add to cart</button>
-                  
-                  {/* <div className='pp'>NOT</div> */}
-                  <div className='pw1' >
+                  <button
+                    style={{ width: "250px", backgroundColor: "yellow", border: "none" }}
+                    onClick={() => toggleButton(item)}
+                  >
+                    add to cart
+                  </button>
+                  <div className="pw1">
                     <img src={Like2} onClick={() => toggleLike(item)} alt="" />
-                  </div> 
-                  <br />
-                  <div className='main-top1'>
-                    {/* <p>{item.name}</p> */}
+                  </div>
+                  <div className="main-top1">
                     <p>{item.name}</p>
                     <h5>price: {item.price}</h5>
-                  </div> 
+                  </div>
                 </div>
               </div>
-            ))   
+            ))
           }
-
-</div>
-    
-
-</div>
+        </div>
+      </div>
 <div className='main1-custom1'>
   <h2>Особенные категории</h2>
       <div className='center-custom1'> 
