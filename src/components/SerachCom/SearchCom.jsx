@@ -60,12 +60,40 @@ function SearchCom() {
       <header className='header39'>
         <div className='header39gg'>
           <div className='header39-left container'>
-            <ul>
-              <li><a href="">Одежда</a></li>
-              <li><Link to={`/obuv`}><a href="">Обувь</a></Link></li>
-              <li><a href="">Аксессуары</a></li>
-              <li><a href="">Сумки</a></li>
-              <li><Link to={`/0consignment`}><a href="">Товары для спорта</a></Link></li>
+          <ul>
+              <li>
+                <Link to={`/`}>
+                <a href="">Главная</a>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/onas`}>
+                <a href="">О нас</a>
+                </Link>
+              </li>
+              <li>
+                
+              </li>
+              <li>
+                <Link to={`/istoriabrenda`}>
+                <a href="">История </a>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/proleved`}>
+                <a href="">Proleved</a>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/help`}>
+                <a href="">Help</a>
+              </Link>
+              </li>
+              <li>
+                <Link to={`/0consignment`}>
+                <a href="">Товары для спорта</a>
+                </Link>
+              </li>
               <p>DEALER</p>
             </ul>
           </div>
@@ -74,7 +102,7 @@ function SearchCom() {
               <img src={Like3} alt="" />
             </Link>
             <img src={Magazin2} alt="" />
-            <img src={search2} alt="" />
+            <img src={search3} alt="" />
           </div>
         </div>
       </header>
@@ -101,19 +129,29 @@ function SearchCom() {
           .slice(0, 20)
           .map((item) => (
             <div key={item.id} data={item}>
-              <div className='kros11'>
-                <div className='mm1'>
-                  <img src={item.avatar} alt="" />
+            <div className='kros1'>
+                  <div className='mm'>
+                  <img 
+                      src={item.avatar} 
+                      alt="" 
+                      // style={{ height: "248px", marginTop: "-60px" }} 
+                      onClick={() => handleAvatarClick(item)} // Обработчик клика
+                    /> 
+                  </div>
+                  
+                    <button style={{width: "250px", backgroundColor: "yellow", border:"none",}} onClick={() => toggleButton(item)}>add to cart</button>
+                  
+                  {/* <div className='pp'>NOT</div> */}
+                  <div className='pw1' >
+                    <img src={Like2} onClick={() => toggleLike(item)} alt="" />
+                  </div> 
+                  <br />
+                  <div className='main-top1'>
+                    {/* <p>{item.name}</p> */}
+                    <p>{item.name}</p>
+                    <h5>price: {item.price}</h5>
+                  </div> 
                 </div>
-                <div className='pp-11'>pre-loved</div>
-                <div className='pw11'>
-                  <img src={Like2} alt="" />
-                </div><br />
-                <div className='main-top11'>
-                  <p>{item.name}</p>
-                  <h5>{item.price}</h5>
-                </div>
-              </div>
             </div>
           ))}
       </div>
@@ -175,20 +213,29 @@ readOnly
       .filter(item => item.price >= minPrice && item.price <= maxPrice)  // Фильтрация по цене
       .map((item) => (
         <div key={item.id} data={item}>
-          <div className='kros19'>
-            <div className='mm9'>
-              <img src={item.avatar} alt="" />
-            </div>
-            <div className='pp9'>NEW</div>
-            <div className='pw19'>
-              <img src={Like2} alt="" />
-            </div> <br />
-            <div className='main-top19'>
-              <p>Сумка Jacquemus</p>
-              <p>Le Bambidou</p>
-              <h5>{item.price}</h5>
-            </div>
-          </div>
+         <div className='kros1'>
+                  <div className='mm'>
+                  <img 
+                      src={item.avatar} 
+                      alt="" 
+                      // style={{ height: "248px", marginTop: "-60px" }} 
+                      onClick={() => handleAvatarClick(item)} // Обработчик клика
+                    /> 
+                  </div>
+                  
+                    <button style={{width: "250px", backgroundColor: "yellow", border:"none",}} onClick={() => toggleButton(item)}>add to cart</button>
+                  
+                  {/* <div className='pp'>NOT</div> */}
+                  <div className='pw1' >
+                    <img src={Like2} onClick={() => toggleLike(item)} alt="" />
+                  </div> 
+                  <br />
+                  <div className='main-top1'>
+                    {/* <p>{item.name}</p> */}
+                    <p>{item.name}</p>
+                    <h5>price: {item.price}</h5>
+                  </div> 
+                </div>
         </div>
       ))
   }

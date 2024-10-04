@@ -33,23 +33,39 @@ function CatalogCom() {
             <Banner />
           <div className='header4gg'>
           <div className='header4-left '>
-            <ul>
+          <ul>
               <li>
-                <a href="">Одежда</a>
-              </li>
-              <li>
-              <Link to={`/obuv`}>
-                <a href="">Обувь</a>
+                <Link to={`/`}>
+                <a href="">Главная</a>
                 </Link>
               </li>
               <li>
-                <a href="">Аксессуары</a>
+                <Link to={`/onas`}>
+                <a href="">О нас</a>
+                </Link>
               </li>
               <li>
-                <a href="">Сумки</a>
+                
               </li>
               <li>
+                <Link to={`/istoriabrenda`}>
+                <a href="">История </a>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/proleved`}>
+                <a href="">Proleved</a>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/help`}>
+                <a href="">Help</a>
+              </Link>
+              </li>
+              <li>
+                <Link to={`/0consignment`}>
                 <a href="">Товары для спорта</a>
+                </Link>
               </li>
               <p>DEALER</p>
             </ul>
