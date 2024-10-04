@@ -49,6 +49,7 @@ function HomeCom() {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const dispatch = useDispatch();
+  const [checkedItems, setCheckedItems] = useState({}); // Состояние для отслеживания выбранных товаров
 
   const navigate = useNavigate(); // Инициализация useHistory
 
@@ -121,7 +122,25 @@ function HomeCom() {
     });
   };
   
+  const handleDelete = (item) => {
+    setSelectedProducts((prevSelected) => 
+      prevSelected.filter(selectedItem => selectedItem !== item)
+    );
+  };
 
+  
+  const handleCheckout = () => {
+    const selectedQuantity = selectedProducts.filter(item => checkedItems[item.id]).length;
+    // Перенаправляем на страницу оформления с переданным количеством выбранных товаров
+    navigate('/checkout', { state: { quantity: selectedQuantity } });
+  };
+  
+  const handleCheckboxChange = (item) => {
+    setCheckedItems((prev) => ({
+      ...prev,
+      [item.id]: !prev[item.id], // Инвертируем текущее состояние
+    }));
+  };
   
 
 
