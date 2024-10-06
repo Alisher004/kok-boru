@@ -11,7 +11,7 @@ function NasCom() {
   return (
     <>
     <div className='ONas '>
-          <div className='header12 container'>
+          <div className='header12 '>
           <div className='header12-left '>
           <ul>
               <li>
