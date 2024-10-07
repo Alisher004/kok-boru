@@ -53,7 +53,7 @@ function Oform() {
                 </Link>
               </li>
               <p>DEALER</p>
-            </ul>
+            </ul> 
           </div>
           <div className='header1709-img'>
             <img src={Like} alt="" />

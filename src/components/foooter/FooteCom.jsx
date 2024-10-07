@@ -6,7 +6,7 @@ import wk from "../../assets/svg/wk.svg"
 
 function FooterCom() {
   return (
-    <footer className='footerali'>
+    <footer className='footerali container'>
       <div className='syzykali'></div>
     <div className='infoali'>
       <div className='dealerali'>

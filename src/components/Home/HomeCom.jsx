@@ -48,24 +48,45 @@ function HomeCom() {
   const [products, setProducts] = useState([]);
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
+
+  
+
+  const [filteredProducts, setFilteredProducts] = useState([]); // Отфильтрованные продукты
+  const [minPrice, setMinPrice] = useState(0); // Начальное значение для minPrice
+  const [maxPrice, setMaxPrice] = useState(100000); 
+
   const dispatch = useDispatch();
   const [checkedItems, setCheckedItems] = useState({}); // Состояние для отслеживания выбранных товаров
 
   const navigate = useNavigate(); // Инициализация useHistory
 
-  // ... остальной код ...
-  const [minPrice, setMinPrice] = useState(0); // Начальное значение для minPrice
-  const [maxPrice, setMaxPrice] = useState(100); // Начальное значение для maxPrice
+  const handleMinChange = (event) => {
+    setMinPrice(event.target.value);
+  };
+
+  const handleMaxChange = (event) => {
+    setMaxPrice(event.target.value);
+  };
+
+  // Функция для фильтрации продуктов по цене
+  const handleFilterClick = () => {
+    const filtered = products.filter(item => item.price >= minPrice && item.price <= maxPrice);
+    setFilteredProducts(filtered); // Обновляем список отфильтрованных продуктов
+  };
 
   // Функция для изменения значения minPrice
-  const handleMinChange = (event) => {
-      setMinPrice(event.target.value); // Обновляет состояние minPrice
-  };
+  
 
-  // Функция для изменения значения maxPrice
-  const handleMaxChange = (event) => {
-      setMaxPrice(event.target.value); // Обновляет состояние maxPrice
-  };
+ 
+
+
+  // Инициализация useHistory
+
+  // ... остальной код ...
+ 
+
+  // Функция для изменения значения minPrice
+ 
 
  
 
@@ -312,7 +333,7 @@ function HomeCom() {
           </div>
           <div className='main1-kros'>
           {
-            products.slice(0, 24).map((item) => (
+            products.slice(9, 24).map((item) => (
               <div key={item.id} data={item}>
            <div className='kros1'>
                   <div className='mm'>
@@ -374,7 +395,7 @@ function HomeCom() {
           <div className='main1-kros'>
           
           {
-            products.slice(0, 24).map((item) => (
+            products.slice(5, 24).map((item) => (
               <div key={item.id} data={item}>
            <div className='kros1'>
                   <div className='mm'>
@@ -556,7 +577,7 @@ function HomeCom() {
 
           <div className='main1-kros'>
           {
-            products.slice(0, 24).map((item) => (
+            products.slice(10, 24).map((item) => (
               <div key={item.id} data={item}>
            <div className='kros1'>
                   <div className='mm'>

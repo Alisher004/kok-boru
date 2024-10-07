@@ -55,6 +55,19 @@ function SearchCom() {
     setMaxPrice(e.target.value);
   };
 
+  const handleFilterClick = () => {
+    const filtered = products.filter(item => item.price >= minPrice && item.price <= maxPrice);
+    setFilteredProducts(filtered); // Обновляем список отфильтрованных продуктов
+  };
+
+  const handleAvatarClick = (item) => {
+    console.log('Clicked item:', item); // Проверяем нажатый элемент
+    navigate('/obuv', { state: { selectedProduct: item } });
+  };
+
+
+  
+
   return (
     <div>
       <header className='header39'>
