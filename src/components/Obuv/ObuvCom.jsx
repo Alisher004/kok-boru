@@ -196,12 +196,10 @@ const handleSizeSelect = (size) => {
                   </div>
                   <div className='bm-nur'>
                     <div className='bm2-nur'>
-                      <h2>Итого</h2>
-                      <h2>{selectedProducts.reduce((total, product) => total + product.price, 0)}₽</h2>
+                      {/* <h2>Итого</h2> */}
+                      {/* <h2>{selectedProducts.reduce((total, product) => total + product.price, 0)}₽</h2> */}
                     </div>
-                    <div className='btn-nur'>
-                      <button>Оформить</button>
-                    </div>
+                    
                   </div>
                   <div className='selected-items'>
                     {selectedProducts.map((item) => (
@@ -210,11 +208,20 @@ const handleSizeSelect = (size) => {
                         <div>
                           <p>{item.name}</p>
                           <p>Размер: {item.size}</p> {/* Отображение выбранного размера */}
-                          <h5>{item.price}₽</h5>
+                          <h5>{item.price}</h5>
+                          <div className='btn-nur'>
+                            <Link to={`/oferzakaz`}>
+                      <button>Оформить</button>
+                            </Link>
+                    </div>
                         </div>
                       </div>
+                      
+                      
                     ))}
+                   
 </div>
+
                 </div>
               </div>
             )}

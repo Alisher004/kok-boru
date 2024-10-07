@@ -1,107 +1,86 @@
-.footer{
+.footerali {
+  width: 1440px;
+  margin: 0 auto 20px;
 
-    // border: 1px solid black;
-    width: 1440px;
-    margin: 0 auto 20px;
-
-.syzyk{
+  .syzykali {
     border-top: 2px solid #ccc;
     position: relative;
     top: 20px;
-
-    width: 1440px;
+    // width: 1240px;
     margin: 20px auto 20px;
+  }
 
-.syzyk{
-    border-top: 2px solid #ccc;
-    // position: relative;
-    // top: 20px;
-}
-
-.info1{
+  .infoali {
     display: flex;
     justify-content: space-between;
     padding: 70px 100px;
-    // justify-content: space-between;
     gap: 100px;
-    padding: 60px 0;
 
-    .dealer{
-        width: 260px;
-        // display: grid;
-        p{
-            color: rgb(123, 123, 123);
-            font-family: Inter;
-            font-size: 15px;
-            font-weight: 400;
-            line-height: 18px;
-            letter-spacing: 0%;
-            text-align: left;    
-            margin: 30px 0 30px;
-            text-decoration: none !important;
+    .dealerali {
+      width: 260px;
+
+      p {
+        color: rgb(123, 123, 123);
+        font-family: Inter;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 18px;
+        margin: 30px 0;
+        text-align: left;
+      }
+
+      .logosali {
+        display: flex;
+        gap: 20px;
+
+        img {
+          width: 35px;
+          height: 35px;
         }
+      }
 
-            .logos{
-                display: flex;
-                gap: 20px;
+      h1 {
+        color: rgb(0, 0, 0);
+        font-family: Ruberoid;
+        font-size: 22.89px;
+        font-weight: 400;
+        line-height: 31px;
+        text-align: left;
+      }
 
-                img{
-                    width: 35px;
-                    height: 35px;
-            }
+      ul {
+ 
+        li {
+          margin: 10px 0 5px;
+          color: rgb(0, 0, 0);
+          font-family: Inter;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 19px;
+          list-style: none;  
         }
-    
-        h1{
-            color: rgb(0, 0, 0);
-            font-family: Ruberoid;
-            font-size: 22.89px;
-            font-weight: 400;
-            line-height: 31px;
-            letter-spacing: -2%;
-            text-align: left;            
-        }
-
-        ul{
-            color: rgb(0, 0, 0);
-            font-family: Inter;
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 19px;
-            letter-spacing: 0%;
-            text-align: left;    
-            // list-style: none;    
-
-
-        li{
-            margin: 10px 0 5px;
-        }
-            }
-        }
+      }
     }
+  }
 
-.syzyk2{
+  .syzyk2ali {
     border: 1px solid #ccc;
     position: relative;
-    // position: relative;
     bottom: 10px;
-}
+  }
 
-    .u1{
-        display: flex;
-        justify-content: space-evenly;
-        padding: 15px;
+  .u1ali {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 15px;
 
-        li{
-            color: rgb(114, 114, 114);
-            font-family: Inter;
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 19px;
-            letter-spacing: 0%;
-            text-align: left;
-            list-style: none;            
-        }
+    li {
+      color: rgb(114, 114, 114);
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 19px;
+      list-style: none;
     }
-
-}
+  }
 }

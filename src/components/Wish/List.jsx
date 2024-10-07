@@ -44,25 +44,40 @@ function List() {
           <img src={wishlist} alt="" />
           <div className='nur1709gg'>
           <div className='nur1709-left '>
-            <ul>
+          <ul>
               <li>
-                <a href="">Одежда</a>
-              </li>
-              <li>
-              <Link to={`/obuv`}>
-                <a href="">Обувь</a>
+                <Link to={`/`}>
+                <a href="">Главная</a>
                 </Link>
               </li>
               <li>
-                <a href="">Аксессуары</a>
+                <Link to={`/onas`}>
+                <a href="">О нас</a>
+                </Link>
               </li>
               <li>
-                <a href="">Сумки</a>
+                
               </li>
               <li>
-              <Link to={`/0consignment`}>
+                <Link to={`/istoriabrenda`}>
+                <a href="">История </a>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/proleved`}>
+                <a href="">Proleved</a>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/help`}>
+                <a href="">Help</a>
+              </Link>
+              </li>
+              <li>
+                <Link to={`/0consignment`}>
                 <a href="">Товары для спорта</a>
-                </Link>              </li>
+                </Link>
+              </li>
               <p>DEALER</p>
             </ul>
           </div>
@@ -242,20 +257,29 @@ function List() {
 </div>
 <div className='catalog-2'>
     {items.map((item) => (
-      <div key={item.id} className='kros19'>
-        <div className='mm9'>
-          <img src={item.avatar} alt={item.name} />
-        </div>
-        <div className='pp9'>NEW</div>
-        <div className='pw19'>
-          <img src={Like2} alt="" />
-        </div> <br />
-        <div className='main-top19'>
-          <p>{item.name}</p>
-          <p>Le Bambidou</p>
-          <h5>{item.price}</h5>
-        </div>
-      </div>
+  <div className='kros1'>
+  <div className='mm'>
+  <img 
+      src={item.avatar} 
+      alt="" 
+      // style={{ height: "248px", marginTop: "-60px" }} 
+      onClick={() => handleAvatarClick(item)} // Обработчик клика
+    /> 
+  </div>
+  
+    <button style={{width: "250px", backgroundColor: "yellow", border:"none",}} onClick={() => toggleButton(item)}>add to cart</button>
+  
+  {/* <div className='pp'>NOT</div> */}
+  <div className='pw1' >
+    <img src={Like2} onClick={() => toggleLike(item)} alt="" />
+  </div> 
+  <br />
+  <div className='main-top1'>
+    {/* <p>{item.name}</p> */}
+    <p>{item.name}</p>
+    <h5>price: {item.price}</h5>
+  </div> 
+</div>
     ))}
   </div>
 

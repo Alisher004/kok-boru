@@ -14,24 +14,42 @@ function KonCom() {
           <img src={konserj} alt="" />
         </div>
         <div className='header2-left '>
-          <ul>
-            <li>
-              <a href="">Одежда</a>
-            </li>
-            <li>
-              <a href="">Обувь</a>
-            </li>
-            <li>
-              <a href="">Аксессуары</a>
-            </li>
-            <li>
-              <a href="">Сумки</a>
-            </li>
-            <li>
-              <a href="">Товары для спорта</a>
-            </li>
-            <p>DEALER</p>
-          </ul>
+        <ul>
+              <li>
+                <Link to={`/`}>
+                <a href="">Главная</a>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/onas`}>
+                <a href="">О нас</a>
+                </Link>
+              </li>
+              <li>
+                
+              </li>
+              <li>
+                <Link to={`/istoriabrenda`}>
+                <a href="">История </a>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/proleved`}>
+                <a href="">Proleved</a>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/help`}>
+                <a href="">Help</a>
+              </Link>
+              </li>
+              <li>
+                <Link to={`/0consignment`}>
+                <a href="">Товары для спорта</a>
+                </Link>
+              </li>
+              <p>DEALER</p>
+            </ul>
           <div className='ali'>
             <div className='perexod'>
             <h5>Главная/</h5>

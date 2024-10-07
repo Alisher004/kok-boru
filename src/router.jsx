@@ -63,10 +63,10 @@ export const myRouter = createBrowserRouter([
                 path: "wishlist",
                 element: <Wishlist />
             },
-            {
-                path: "proleved",
-                element: <Proleved />
-            },
+            // {
+            //     path: "proleved",
+            //     element: <Proleved />
+            // },
             {
                 path: "istoriabrenda",
                 element: <Istoriarenda />

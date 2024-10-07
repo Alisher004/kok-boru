@@ -6,22 +6,22 @@ import wk from "../../assets/svg/wk.svg"
 
 function FooterCom() {
   return (
-    <footer className='footer'>
-      <div className='syzyk'></div>
-    <div className='info1'>
-      <div className='dealer'>
+    <footer className='footerali container'>
+      <div className='syzykali'></div>
+    <div className='infoali'>
+      <div className='dealerali'>
         <img src={dealer} alt="" />
         <p>
           Ваш поставщик в мир лимитированного 
           ассортимента с доставкой по всему миру
         </p>
-        <div className='logos'>
+        <div className='logosali'>
           <img src={telegram} alt="" />
         <img src={wk} alt="" />
         </div>
         
       </div>
-      <div className='dealer'>
+      <div className='dealerali'>
         <h1>Каталог</h1>
         <ul>
           <li>Одежда</li>
@@ -33,7 +33,7 @@ function FooterCom() {
           <li>Custom</li>
         </ul>
       </div>
-      <div className='dealer'>
+      <div className='dealerali'>
         <h1>Меню</h1>
         <ul>
           <li>О нас</li>
@@ -42,7 +42,7 @@ function FooterCom() {
           <li>Клиентский сервис</li>
         </ul>
       </div>
-      <div className='dealer'>
+      <div className='dealerali'>
         <h1>Поддержка</h1>
         <ul>
           <li>Доставка</li>
@@ -53,8 +53,8 @@ function FooterCom() {
         </ul>
       </div>
     </div>
-    <div className='syzyk2'></div>
-    <ul className='u1'>
+    <div className='syzyk2ali'></div>
+    <ul className='u1ali'>
       <li>Политика конфиденциальности</li>
       <li>Пользовательское соглашение</li>
       <li>help@dealerclub</li>

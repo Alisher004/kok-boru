@@ -48,23 +48,45 @@ function HomeCom() {
   const [products, setProducts] = useState([]);
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
+
+  
+
+  const [filteredProducts, setFilteredProducts] = useState([]); // Отфильтрованные продукты
+  const [minPrice, setMinPrice] = useState(0); // Начальное значение для minPrice
+  const [maxPrice, setMaxPrice] = useState(100000); 
+
   const dispatch = useDispatch();
+  const [checkedItems, setCheckedItems] = useState({}); // Состояние для отслеживания выбранных товаров
 
   const navigate = useNavigate(); // Инициализация useHistory
 
-  // ... остальной код ...
-  const [minPrice, setMinPrice] = useState(0); // Начальное значение для minPrice
-  const [maxPrice, setMaxPrice] = useState(100); // Начальное значение для maxPrice
+  const handleMinChange = (event) => {
+    setMinPrice(event.target.value);
+  };
+
+  const handleMaxChange = (event) => {
+    setMaxPrice(event.target.value);
+  };
+
+  // Функция для фильтрации продуктов по цене
+  const handleFilterClick = () => {
+    const filtered = products.filter(item => item.price >= minPrice && item.price <= maxPrice);
+    setFilteredProducts(filtered); // Обновляем список отфильтрованных продуктов
+  };
 
   // Функция для изменения значения minPrice
-  const handleMinChange = (event) => {
-      setMinPrice(event.target.value); // Обновляет состояние minPrice
-  };
+  
 
-  // Функция для изменения значения maxPrice
-  const handleMaxChange = (event) => {
-      setMaxPrice(event.target.value); // Обновляет состояние maxPrice
-  };
+ 
+
+
+  // Инициализация useHistory
+
+  // ... остальной код ...
+ 
+
+  // Функция для изменения значения minPrice
+ 
 
  
 
@@ -145,7 +167,25 @@ function HomeCom() {
     });
   };
   
+  const handleDelete = (item) => {
+    setSelectedProducts((prevSelected) => 
+      prevSelected.filter(selectedItem => selectedItem !== item)
+    );
+  };
 
+  
+  const handleCheckout = () => {
+    const selectedQuantity = selectedProducts.filter(item => checkedItems[item.id]).length;
+    // Перенаправляем на страницу оформления с переданным количеством выбранных товаров
+    navigate('/checkout', { state: { quantity: selectedQuantity } });
+  };
+  
+  const handleCheckboxChange = (item) => {
+    setCheckedItems((prev) => ({
+      ...prev,
+      [item.id]: !prev[item.id], // Инвертируем текущее состояние
+    }));
+  };
   
 
   
@@ -167,30 +207,38 @@ function HomeCom() {
 
       </div>
        
-        <header className='header1 container  '>
+      <header className='header1 container  '>
           <img src={mainimage} alt="" />
           <div className='header1gg'>
           <div className='header1-left   '>
             <ul>
               <li>
-                <Link to={`catalog`}>
-                <a href="">Одежда</a>
+                <Link to={`/`}>
+                <a href="">Главная</a>
                 </Link>
               </li>
               <li>
-                <Link to={`/obuv`}>
-                <a href="">Обувь</a>
+                <Link to={`/onas`}>
+                <a href="">О нас</a>
                 </Link>
               </li>
               <li>
-                <Link to={`/oformzakaz`}>
-                <a href="">Аксессуары</a>
+                
+              </li>
+              <li>
+                <Link to={`/istoriabrenda`}>
+                <a href="">История </a>
                 </Link>
               </li>
               <li>
-                <Link to={`proleved`}>
-                <a href="">Сумки</a>
+                <Link to={`/proleved`}>
+                <a href="">Proleved</a>
                 </Link>
+              </li>
+              <li>
+                <Link to={`/help`}>
+                <a href="">Help</a>
+              </Link>
               </li>
               <li>
                 <Link to={`/0consignment`}>
@@ -206,39 +254,49 @@ function HomeCom() {
             </Link>
             <img src={Magazin} alt="" onClick={handleMagazinClick} /> 
             {isModalVisible && (
-              <div className='icon2'>
-                <div className='modal-nur'>
-                  <div className='modal2-nur'>
-                    <h2>Корзина</h2>
-                    <img src={x} alt="" onClick={handleCloseClick} />
-                  </div>
-                  <div className='m3-nur'>
-                    <h5>{selectedProducts.length} товара</h5>
-                    <h5>Очистить</h5>
-                  </div>
-                  <div className='bm-nur'>
-                    <div className='bm2-nur'>
-                      <h2>Итого</h2>
-                      <h2 style={{display: "flex", gap: "10px"}}>{selectedProducts.reduce((total, product) => total + product.price, 0)}</h2>
-                    </div>
-                    <div className='btn-nur'>
-                      <button>Оформить</button>
-                    </div>
-                  </div>
-                  <div className='selected-items'>
-                    {selectedProducts.map((item) => (
-                      <div key={item.id} className='selected-item'>
-                        <img src={item.avatar} alt={item.name} style={{ height: "200px", width: "200px" }} />
-                        <div>
-                          <p>{item.name}</p>
-                          <h5>{item.price}₽</h5>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}      
+  <div className='icon2'>
+    <div className='modal-nur'>
+      <div className='modal2-nur'>
+        <h2>Корзина</h2>
+        <img src={x} alt="" onClick={handleCloseClick} />
+      </div>
+      <div className='m3-nur'>
+        <h5>{selectedProducts.length} товара</h5>
+        <h5 onClick={() => setSelectedProducts([])} style={{ cursor: 'pointer' }}>Очистить</h5>
+      </div>
+      <div className='selected-items'>
+        {selectedProducts.map((item) => (
+          <div key={item.id} className='selected-item'>
+            <img src={item.avatar} alt={item.name} style={{ height: "200px", width: "200px" }} />
+            <div>
+              <p>{item.name}</p>
+              <h5>{item.price}</h5>
+              <input
+                type="checkbox"
+                checked={!!checkedItems[item.id]}
+                onChange={() => handleCheckboxChange(item)}
+              />
+              <button onClick={() => handleDelete(item)} style={{width: "100px", borderRadius: "25px", marginLeft:"20px"}}>
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className='bm-nur'>
+        <div className='bm2-nur'>
+          <h2>Итого</h2>
+        </div>
+        <div className='btn-nur'>
+          <Link to={`/oferzakaz`}>
+          <button onClick={handleCheckout}>Оформить</button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+    
                <Link to={`/search`}>
           <img src={search} alt="" />
           </Link>
@@ -253,30 +311,7 @@ function HomeCom() {
             </Link>
           </div>
 
-          <div className='main1-status'>
-          <div className='status'>
-        <div className='status1'>
-              <img src={status1} alt="" />
-              <p>покупка</p>
-            </div> <div className='status1'>
-              <img src={status2} alt="" />
-              <p>покупка</p>
-            </div> <div className='status1'>
-              <img src={status3} alt="" />
-              <p>покупка</p>
-            </div> <div className='status1'>
-              <img src={status4} alt="" />
-              <p>покупка</p>
-            </div> <div className='status1'>
-              <img src={status5} alt="" />
-              <p>покупка</p>
-            </div> <div className='status1'>
-              <img src={status6} alt="" />
-              <p>покупка</p>
-            </div>
-            </div>
-
-          </div>
+         
       
         </header>
 
@@ -289,7 +324,7 @@ function HomeCom() {
           {
             products.slice(0, 24).map((item) => (
               <div key={item.id} data={item}>
-                <div className='kros1'>
+           <div className='kros1'>
                   <div className='mm'>
                   <img 
                       src={item.avatar} 
@@ -299,9 +334,9 @@ function HomeCom() {
                     /> 
                   </div>
                   
-                    <button onClick={() => toggleButton(item)}>add to cart</button>
+                    <button style={{width: "250px", backgroundColor: "yellow", border:"none",}} onClick={() => toggleButton(item)}>add to cart</button>
                   
-                  <div className='pp'>NOT</div>
+                  {/* <div className='pp'>NOT</div> */}
                   <div className='pw1' >
                     <img src={Like2} onClick={() => toggleLike(item)} alt="" />
                   </div> 
@@ -309,7 +344,7 @@ function HomeCom() {
                   <div className='main-top1'>
                     {/* <p>{item.name}</p> */}
                     <p>{item.name}</p>
-                    <h5>{item.price}</h5>
+                    <h5>price: {item.price}</h5>
                   </div> 
                 </div>
               </div>
@@ -325,9 +360,9 @@ function HomeCom() {
           </div>
           <div className='main1-kros'>
           {
-            products.slice(0, 24).map((item) => (
+            products.slice(9, 24).map((item) => (
               <div key={item.id} data={item}>
-                <div className='kros1'>
+           <div className='kros1'>
                   <div className='mm'>
                   <img 
                       src={item.avatar} 
@@ -337,9 +372,9 @@ function HomeCom() {
                     /> 
                   </div>
                   
-                    <button onClick={() => toggleButton(item)}>add to cart</button>
+                    <button style={{width: "250px", backgroundColor: "yellow", border:"none",}} onClick={() => toggleButton(item)}>add to cart</button>
                   
-                  <div className='pp'>NOT</div>
+                  {/* <div className='pp'>NOT</div> */}
                   <div className='pw1' >
                     <img src={Like2} onClick={() => toggleLike(item)} alt="" />
                   </div> 
@@ -347,7 +382,7 @@ function HomeCom() {
                   <div className='main-top1'>
                     {/* <p>{item.name}</p> */}
                     <p>{item.name}</p>
-                    <h5>{item.price}</h5>
+                    <h5>price: {item.price}</h5>
                   </div> 
                 </div>
               </div>
@@ -385,84 +420,36 @@ function HomeCom() {
     <button>Перейти</button>
           </div>
           <div className='main1-kros'>
-            <div className='kros1'>
-              <div className='mm'>
-            <img src={kros3} alt="" />
-    
+          
+          {
+            products.slice(5, 24).map((item) => (
+              <div key={item.id} data={item}>
+           <div className='kros1'>
+                  <div className='mm'>
+                  <img 
+                      src={item.avatar} 
+                      alt="" 
+                      // style={{ height: "248px", marginTop: "-60px" }} 
+                      onClick={() => handleAvatarClick(item)} // Обработчик клика
+                    /> 
+                  </div>
+                  
+                    <button style={{width: "250px", backgroundColor: "yellow", border:"none",}} onClick={() => toggleButton(item)}>add to cart</button>
+                  
+                  {/* <div className='pp'>NOT</div> */}
+                  <div className='pw1' >
+                    <img src={Like2} onClick={() => toggleLike(item)} alt="" />
+                  </div> 
+                  <br />
+                  <div className='main-top1'>
+                    {/* <p>{item.name}</p> */}
+                    <p>{item.name}</p>
+                    <h5>price: {item.price}</h5>
+                  </div> 
+                </div>
               </div>
-              <div className='pp-1'>pre-loved</div>
-              <div className='pw1'>
-                <img src={Like2} alt="" />
-              </div> <br />
-    
-            <div className='main-top1'>
-              <p>Сумка Jacquemus 
-              </p>
-              <p>Le Bambidou</p>
-              <h5>21 999₽</h5>
-            </div> 
-              
-
-            </div>
-            {/* .... */}
-            <div className='kros1'>
-              <div className='mm'>
-            <img src={kros2} alt="" />
-    
-              </div>
-              <div className='pp-2'>NEW</div>
-              <div className='pw1'>
-                <img src={Like2} alt="" />
-              </div> <br />
-    
-            <div className='main-top1'>
-              <p>Сумка Jacquemus 
-              </p>
-              <p>Le Bambidou</p>
-              <h5>21 999₽</h5>
-            </div> 
-              
-
-            </div>
-            {/* // */}
-            <div className='kros1'>
-              <div className='mm'>
-            <img src={kros1} alt="" />
-    
-              </div>
-              <div className='pp-2'>-40%</div>
-              <div className='pw1'>
-                <img src={Like2} alt="" />
-              </div> <br />
-    
-            <div className='main-top1'>
-              <p>Сумка Jacquemus 
-              </p>
-              <p>Le Bambidou</p>
-              <h5>21 999₽</h5>
-            </div> 
-              
-
-            </div>
-            {/* // */}
-            <div className='kros1'>
-              <div className='mm'>
-            <img src={kros4} alt="" />
-    
-              </div>
-              <div className='pw1'>
-                <img src={Like2} alt="" />
-              </div> <br />
-    
-            <div className='main-top1'>
-              <p>Сумка Jacquemus 
-              </p>
-              <p>Le Bambidou</p>
-              <h5>21 999₽</h5>
-            </div> 
-              
-
-            </div>
+            ))   
+          }
 
 </div>
 
@@ -519,136 +506,79 @@ function HomeCom() {
         <h1>Гарантия лучшей <br /> цены</h1>
       </div>
 
- <div className='main1-podbor1'>
-  <div className='podbor1-top'>
-    <h1>Подберем пару по бюджету</h1>
-  
- 
-      <div className="price-range">
-      <label>Цена</label>
-      <div className="slider-container">
-        <input
-          type="range"
-          id="rangeMin"
-          min="0"
-          max="100000"
-          value={minPrice}
-          step="100"
-          onChange={handleMinChange}
-        />
-        <input
-          type="range"
-          id="rangeMax"
-          min="0"
-          max="100000"
-          value={maxPrice}
-          step="100"
-          onChange={handleMaxChange}
-        />
+      <div className="main1-podbor1">
+        <div className="price-range">
+          <label>Цена</label>
+          <div className="slider-container">
+            <input
+              type="range"
+              id="rangeMin"
+              min="0"
+              max="100000"
+              value={minPrice}
+              step="100"
+              onChange={handleMinChange}
+            />
+            <input
+              type="range"
+              id="rangeMax"
+              min="0"
+              max="100000"
+              value={maxPrice}
+              step="100"
+              onChange={handleMaxChange}
+            />
+          </div>
+          <div className="price-labels">
+            <input
+              type="text"
+              id="minPrice"
+              value={parseInt(minPrice).toLocaleString()}
+              readOnly
+            />
+            <span>–</span>
+            <input
+              type="text"
+              id="maxPrice"
+              value={parseInt(maxPrice).toLocaleString()}
+              readOnly
+            />
+            <span>₽</span>
+          </div>
+          <button onClick={handleFilterClick}>Подобрать</button>
+        </div>
+
+        <div className="main1-kros">
+          {
+            filteredProducts.slice(0, 24).map((item) => (
+              <div key={item.id} data={item}>
+                <div className="kros1">
+                  <div className="mm">
+                    <img
+                      src={item.avatar}
+                      alt={item.name}
+                      onClick={() => handleAvatarClick(item)}
+                    />
+                  </div>
+                  <button
+                    style={{ width: "250px", backgroundColor: "yellow", border: "none" }}
+                    onClick={() => toggleButton(item)}
+                  >
+                    add to cart
+                  </button>
+                  <div className="pw1">
+                    <img src={Like2} onClick={() => toggleLike(item)} alt="" />
+                  </div>
+                  <div className="main-top1">
+                    <p>{item.name}</p>
+                    <h5>price: {item.price}</h5>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
       </div>
-      <div className="price-labels">
-        <input
-          type="text"
-          id="minPrice"
-          value={parseInt(minPrice).toLocaleString()}
-          readOnly
-        />
-        <span>–</span>
-        <input
-          type="text"
-          id="maxPrice"
-          value={parseInt(maxPrice).toLocaleString()}
-          readOnly
-        />
-        <span>₽</span>
-      </div>
-    <button>Подобрать</button>
-    </div>
-    </div>
-
-
-    <div className='main1-krros'>
-            <div className='krros1'>
-              <div className='mmm'>
-            <img src={kros3} alt="" />
-    
-              </div>
-
-              <div className='pww1'>
-                <img src={Like2} alt="" />
-              </div> <br />
-    
-            <div className='main-topp1'>
-              <p>Сумка Jacquemus 
-              </p>
-              <p>Le Bambidou</p>
-              <h5>21 999₽</h5>
-            </div> 
-              
-
-            </div>
-            {/* .... */}
-            <div className='krros1'>
-              <div className='mmm'>
-            <img src={kros2} alt="" />
-    
-              </div>
-              <div className='pww1'>
-                <img src={Like2} alt="" />
-              </div> <br />
-    
-            <div className='main-topp1'>
-              <p>Сумка Jacquemus 
-              </p>
-              <p>Le Bambidou</p>
-              <h5>21 999₽</h5>
-            </div> 
-              
-
-            </div>
-            {/* // */}
-            <div className='krros1'>
-              <div className='mmm'>
-            <img src={kros1} alt="" />
-    
-              </div>
-              <div className='pww1'>
-                <img src={Like2} alt="" />
-              </div> <br />
-    
-            <div className='main-topp1'>
-              <p>Сумка Jacquemus 
-              </p>
-              <p>Le Bambidou</p>
-              <h5>21 999₽</h5>
-            </div> 
-              
-
-            </div>
-            {/* // */}
-            <div className='krros1'>
-              <div className='mmm'>
-            <img src={kros4} alt="" />
-    
-              </div>
-              <div className='pww1'>
-                <img src={Like2} alt="" />
-              </div> <br />
-    
-            <div className='main-topp1'>
-              <p>Сумка Jacquemus 
-              </p>
-              <p>Le Bambidou</p>
-              <h5>21 999₽</h5>
-            </div> 
-              
-
-            </div>
-
-</div>
-    
-
-</div>
 <div className='main1-custom1'>
   <h2>Особенные категории</h2>
       <div className='center-custom1'> 
@@ -673,85 +603,35 @@ function HomeCom() {
           </div>
 
           <div className='main1-kros'>
-            <div className='kros1'>
-              <div className='mm'>
-            <img src={kros3} alt="" />
-    
+          {
+            products.slice(10, 24).map((item) => (
+              <div key={item.id} data={item}>
+           <div className='kros1'>
+                  <div className='mm'>
+                  <img 
+                      src={item.avatar} 
+                      alt="" 
+                      // style={{ height: "248px", marginTop: "-60px" }} 
+                      onClick={() => handleAvatarClick(item)} // Обработчик клика
+                    /> 
+                  </div>
+                  
+                    <button style={{width: "250px", backgroundColor: "yellow", border:"none",}} onClick={() => toggleButton(item)}>add to cart</button>
+                  
+                  {/* <div className='pp'>NOT</div> */}
+                  <div className='pw1' >
+                    <img src={Like2} onClick={() => toggleLike(item)} alt="" />
+                  </div> 
+                  <br />
+                  <div className='main-top1'>
+                    {/* <p>{item.name}</p> */}
+                    <p>{item.name}</p>
+                    <h5>price: {item.price}</h5>
+                  </div> 
+                </div>
               </div>
-              <div className='pp'>NEW</div>
-              <div className='pw1'>
-                <img src={Like2} alt="" />
-              </div> <br />
-    
-            <div className='main-top1'>
-              <p>Сумка Jacquemus 
-              </p>
-              <p>Le Bambidou</p>
-              <h5>21 999₽</h5>
-            </div> 
-              
-
-            </div>
-            {/* .... */}
-            <div className='kros1'>
-              <div className='mm'>
-            <img src={kros1} alt="" />
-    
-              </div>
-              <div className='pp'>NEW</div>
-              <div className='pw1'>
-                <img src={Like2} alt="" />
-              </div> <br />
-    
-            <div className='main-top1'>
-              <p>Сумка Jacquemus 
-              </p>
-              <p>Le Bambidou</p>
-              <h5>21 999₽</h5>
-            </div> 
-              
-
-            </div>
-            {/* // */}
-            <div className='kros1'>
-              <div className='mm'>
-            <img src={kros2} alt="" />
-    
-              </div>
-              <div className='pp'>NEW</div>
-              <div className='pw1'>
-                <img src={Like2} alt="" />
-              </div> <br />
-    
-            <div className='main-top1'>
-              <p>Сумка Jacquemus 
-              </p>
-              <p>Le Bambidou</p>
-              <h5>21 999₽</h5>
-            </div> 
-              
-
-            </div>
-            {/* // */}
-            <div className='kros1'>
-              <div className='mm'>
-            <img src={kros4} alt="" />
-    
-              </div>
-              <div className='pp'>NEW</div>
-              <div className='pw1'>
-                <img src={Like2} alt="" />
-              </div> <br />
-    
-            <div className='main-top1'>
-              <p>Сумка Jacquemus 
-              </p>
-              <p>Le Bambidou</p>
-              <h5>21 999₽</h5>
-            </div> 
-              
-
-            </div>
+            ))   
+          }
 
 </div>
 
